@@ -84,6 +84,8 @@ and calculate mean and median.
     daily_median
 
     ## [1] 10765
+   
+![Sample panel plot](figure/steps.png) 
 
 The `mean` is 1.076618910^{4} and the `median` is 10765.
 
