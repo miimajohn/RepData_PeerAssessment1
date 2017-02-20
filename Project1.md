@@ -85,7 +85,7 @@ and calculate mean and median.
 
     ## [1] 10765
    
-![Sample panel plot](figure/steps.png) 
+![Number of steps](figures/steps.png) 
 
 The `mean` is 1.076618910^{4} and the `median` is 10765.
 
@@ -106,6 +106,7 @@ What is the average daily activity pattern?
 
     ## quartz_off_screen 
     ##                 2
+![Average number of steps](figures/aveSteps.png) 
 
     max_interval <- ave_steps_by_interval[which.max(ave_steps_by_interval$steps),1]
 
@@ -147,7 +148,7 @@ Recount total steps by day and create Histogram.
 
     ## quartz_off_screen 
     ##                 2
-
+![Imputed missing values](figures/impuSteps.png) 
 Calculate new mean and median for imputed data.
 
     rmean.i <- mean(steps_by_day_i$steps)
@@ -230,3 +231,4 @@ dataset with the filled-in missing values for this part.
 
     ## quartz_off_screen 
     ##                 2
+![differences in activity patterns between weekdays and weekends](figures/diffactivity.png)
