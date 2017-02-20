@@ -2,7 +2,10 @@
 ---
 title: "Analyzing personal activity monitoring device (FitBit) Data"
 author: "John Miima"
-date: "20th Feb, 2017"
+date: "Feb, 2017"
+output:
+  md_document:
+    variant: markdown_github
 ---
 ##Intro
 This was the first project for the **Reproducible Research** course in Coursera's Data Science specialization track. The purpose of the project was to answer a series of questions using data collected from a [FitBit](http://en.wikipedia.org/wiki/Fitbit).
@@ -47,11 +50,13 @@ Sum steps by day while ignoring the missing values, create Histogram, and calcul
 ```{r echo=TRUE}
 # Calculate the total number of steps taken per day while ignoring the missing values in the dataset.
 sum_steps_by_day <- aggregate(steps ~ date, activity, sum, na.rm=TRUE)
+png("steps.png",width=480,height=480,units="px",bg="transparent")
 hist(sum_steps_by_day$steps, 
      main = paste("Total Steps Each Day"),  
      border="red",
      col="blue", 
      xlab="Number of Steps")
+dev.off()
 daily_mean <- mean(sum_steps_by_day$steps)
 daily_median <- median(sum_steps_by_day$steps)
 ```
@@ -71,9 +76,10 @@ The `mean` is `r daily_mean` and the `median` is `r daily_median`.
 * Find interval with most average steps. 
 ```{r}
 ave_steps_by_interval <- aggregate(steps ~ interval, activity, mean)
-
+png("aveSteps.png",width=480,height=480,units="px",bg="transparent")
 plot(ave_steps_by_interval$interval,ave_steps_by_interval$steps, type="l", xlab="Interval", ylab="Number of Steps",main="Average Number of Steps per Day by Interval")
 
+dev.off()
 max_interval <- ave_steps_by_interval[which.max(ave_steps_by_interval$steps),1]
 ```
 
@@ -101,11 +107,15 @@ imputed_data[as.character(imputed_data$date) == "2012-10-01", 1] <- 0
 Recount total steps by day and create Histogram. 
 ```{r}
 steps_by_day_i <- aggregate(steps ~ date, imputed_data, sum)
+png("impuSteps.png",width=480,height=480,units="px",bg="transparent")
 hist(steps_by_day_i$steps, main = paste("Total Steps Each Day"), border="red",col="green", xlab="Number of Steps")
 
-#Create Histogram to show difference. 
+#Create Histogram to show difference.
+
 hist(sum_steps_by_day$steps, main = paste("Total Steps Each Day"), border="red", col="blue", xlab="Number of Steps", add=T)
 legend("topright", c("Imputed", "Non-imputed"), col=c("green", "blue"), lwd=10)
+
+dev.off( )
 ```
 
 Calculate new mean and median for imputed data. 
@@ -159,6 +169,7 @@ imputed_data$dow = as.factor(ifelse(is.element(weekdays(as.Date(imputed_data$dat
 steps_by_interval_i <- aggregate(steps ~ interval + dow, imputed_data, mean)
 
 library(lattice)
-
+png("diffactivity.png",width=480,height=480,units="px",bg="transparent")
 xyplot(steps_by_interval_i$steps ~ steps_by_interval_i$interval|steps_by_interval_i$dow, main="Average Steps per Day by Interval",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
+dev.off()
 ```
